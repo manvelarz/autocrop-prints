@@ -15,18 +15,27 @@ the original scan — no re-compression of the source, no lossy intermediate.
 This started as a simple script.
 
 I had boxes of old family photos and a flatbed scanner, and every scan came back with
-several prints on it — cropping them apart by hand, one by one, was not something I was
-going to do a few thousand times. So I wrote a script: find each print on the scan,
+several prints on it. Cropping them apart by hand, one by one, was not something I was
+going to do a few thousand times, so I wrote a script: find each print on the scan,
 straighten it, cut it out.
 
-Then it grew. The script became an app so other people could use it, then so they could
-use it from their phone, and then the interface took on a life of its own — batch
-processing, fixing corners by hand, editing, ZIP export. That app is
-[SmartPhotoCropper](https://smartphotocropper.com). Photo detection there is done by a
-small neural network, which is what handles piles of overlapping prints and phone shots
-taken at an angle.
+Then it grew. People who do not write scripts asked for it, so it became an app — no
+terminal, no install, nothing uploaded: everything runs in the browser on your own
+machine, the core cropping is free, and your photos never leave your device. Then it had
+to work from a phone, and then the interface took on a life of its own — batch runs,
+fixing corners by hand, editing, ZIP export. That app is
+[SmartPhotoCropper](https://smartphotocropper.com), and the photo detection there is
+done by a small neural network, which is what deals with piles of overlapping prints and
+phone shots taken at an angle.
 
-This repo is the first step, kept as it was: no model, no browser, no account. OpenCV
+I opened this part up because it is genuinely useful to people who tinker. And to be
+honest: even if you are technical, the app gives you more control — drag a corner that
+the detector got wrong, run a whole batch, edit and export in one place — and it is
+free and local either way. This repo is for when you want the machinery itself: drop it
+in your own pipeline, change the detector, run it over a hundred thousand scans on a
+server, or just take it apart to see how the geometry works.
+
+What is here is the first step, kept as it was: no model, no browser, no account. OpenCV
 only — edge detection, contours, `minAreaRect` for the rotation, a perspective warp per
 print. Point it at a folder and it works.
 
@@ -80,6 +89,7 @@ touching prints is split and comes out as `scan01_04a.tif`, `scan01_04b.tif`.
 
 | scan | prints | found |
 |---|---|---|
+| 4 real flatbed scans, 9779×6864, 5–6 tilted prints each, white backing | 22 | 22 (6.4 s for the batch) |
 | 4 prints, 90° off, white backing, 4819×6874 flatbed scan | 4 | 4 |
 | synthetic, 4 tilted prints, white backing | 4 | 4 |
 | synthetic, 6 prints incl. a touching pair and one bleached print | 6 | 5 (+1 partial) |
