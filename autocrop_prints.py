@@ -358,7 +358,8 @@ def main() -> int:
         return 1
 
     out_dir = args.out or (args.input.parent / "cropped" if args.input.is_file() else args.input / "cropped")
-    out_dir.mkdir(parents=True, exist_ok=True)
+    if not args.dry_run:
+        out_dir.mkdir(parents=True, exist_ok=True)
     print(f"{len(files)} file(s) -> {out_dir}")
 
     total = 0
