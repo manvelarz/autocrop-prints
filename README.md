@@ -42,9 +42,12 @@ print. Point it at a folder and it works.
 ## Quick start
 
 ```bash
-pip install opencv-python-headless numpy
+# on this machine the venv is already set up — run.sh does the rest:
+./run.sh /path/to/scans            # -> /path/to/scans/cropped/
+./run.sh /path/to/scans --dry-run  # report + contact sheet, nothing written
 
-# whole folder -> <folder>/cropped/ , one TIFF per print + a contact sheet to check
+# or by hand:
+pip install opencv-python-headless numpy
 python autocrop_prints.py /path/to/scans
 
 # see what it would cut without writing anything
